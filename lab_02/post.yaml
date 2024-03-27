@@ -1,0 +1,192 @@
+openapi: '3.0.0'
+info:
+  version: '1.0.0'
+  title: 'Lab_02 API'
+  description: API для второго домашнего задания по курсу Архитектура программных систем
+servers:
+  - url: http://localhost:8081
+    description: Example server
+paths:
+  /posts:
+    get:
+      summary: Чтение информации о постах пользователя
+      parameters:
+      - name: user_id
+        description: Уникальный идентификатор пользователя
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: Найденные посты
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/posts'
+        404:
+          description: No user found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /post:
+    get:
+      summary: Чтение информации о посте
+      parameters:
+      - name: id
+        description: Уникальный идентификатор поста
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: Найденный пост
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/post'
+        404:
+          description: Пост не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Обновление информации в посте
+      parameters:
+      - name: id
+        description: Идентификатор поста
+        in: query
+        required: true
+        schema:
+          type: integer
+          default: 1
+      - name: user_id
+        description: Идентификатор пользователя
+        in: query
+        required: true
+        schema:
+          type: integer
+          default: 1
+      - name: post_text
+        description: Текст поста
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: media
+        description: Ссылка на медиа-файлы
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Идентификатор обновлённого поста
+          content:
+            application/json:
+              schema:
+                type: integer
+        404:
+          description: Ошибка обновления поста
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Добавление нового поста
+      parameters:
+      - name: user_id
+        description: Идентификатор пользователя
+        in: query
+        required: true
+        schema:
+          type: integer
+          default: 1
+      - name: post_text
+        description: Текст поста
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: media
+        description: Ссылка на медиа-файлы
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Идентификатор добавленного поста
+          content:
+            application/json:
+              schema:
+                type: integer
+        404:
+          description: Ошибка добавления поста
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    id:
+      description: Уникальный идентификатор поста
+      type: integer
+    posts:
+      type: array
+      items:
+        $ref: '#/components/schemas/post'
+    post:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        post_text:
+          type: string
+        date_time:
+          type: string
+        media:
+          type: string
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          description: Сообщение о ошибке
+          type: string
+  securitySchemes:
+      basicAuth:     
+        type: http
+        scheme: basic
+security:
+  - basicAuth: []
