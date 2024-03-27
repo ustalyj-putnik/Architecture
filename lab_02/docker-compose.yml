@@ -1,0 +1,71 @@
+version: '3.8'
+services:
+  user:
+    tty: true
+    container_name: lab_02_user
+    command : bash start.sh
+    build:
+      context: .
+      dockerfile: my_service/Dockerfile
+    environment:
+      DB_HOST: lab_02_postgres
+      DB_PORT: 5432
+      DB_LOGIN: root
+      DB_PASSWORD: root
+      DB_DATABASE: archdb
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    networks:
+      - lab_02-network
+  post:
+    tty: true
+    container_name: lab_02_post
+    command : bash start.sh
+    build:
+      context: .
+      dockerfile: my_service/Dockerfile
+    environment:
+      DB_HOST: lab_02_postgres
+      DB_PORT: 5432
+      DB_LOGIN: root
+      DB_PASSWORD: root
+      DB_DATABASE: archdb
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8081:8080
+    networks:
+      - lab_02-network  
+  db:
+    container_name: lab_02_postgres
+    image: postgres:15
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+      POSTGRES_DB: archdb
+    volumes:
+      - lab_02_db:/data/postgres
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - lab_02-network
+  
+volumes:
+  lab_02_db:
+
+
+networks:
+  lab_02-network:
+    driver: bridge
+    external: false
