@@ -1,0 +1,117 @@
+version: '3.8'
+services:
+  user:
+    tty: true
+    container_name: lab_04_user
+    command : bash start.sh
+    build:
+      context: .
+      dockerfile: my_service/Dockerfile
+    environment:
+      DB_HOST: lab_04_postgres
+      DB_PORT: 5432
+      DB_LOGIN: root
+      DB_PASSWORD: root
+      DB_DATABASE: archdb
+      JWT_KEY: 0123456789ABCDEF0123456789ABCDEF
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    networks:
+      - lab_04-network
+  post:
+    tty: true
+    container_name: lab_04_post
+    command : bash start.sh
+    build:
+      context: .
+      dockerfile: my_service/Dockerfile
+    environment:
+      MONGO_HOST: lab04_mongo
+      MONGO_PORT: 27017
+      MONGO_DATABASE: arch
+      JWT_KEY: 0123456789ABCDEF0123456789ABCDEF
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8081:8080
+    networks:
+      - lab_04-network  
+  message:
+    tty: true
+    container_name: lab_04_message
+    command : bash start.sh
+    build:
+      context: .
+      dockerfile: my_service/Dockerfile
+    environment:
+      MONGO_HOST: lab04_mongo
+      MONGO_PORT: 27017
+      MONGO_DATABASE: arch
+      JWT_KEY: 0123456789ABCDEF0123456789ABCDEF
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8082:8080
+    networks:
+      - lab_04-network
+  db_init:
+    tty: true
+    container_name: lab_04_db_init
+    command : bash db_init.sh
+    build:
+      context: .
+      dockerfile: my_service/db_init_Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8083:8080
+    networks:
+      - lab_04-network
+  db:
+    container_name: lab_04_postgres
+    image: postgres:15
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+      POSTGRES_DB: archdb
+    volumes:
+      - lab_04_db:/data/postgres
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - lab_04-network
+  mongodb:
+    image: mongo:5.0
+    container_name: lab04_mongo
+    restart: on-failure
+    networks:
+      - lab_04-network
+    volumes:
+      - lab04_mongodbdata:/data/db
+    ports:
+      - '27017:27017'
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+  
+volumes:
+  lab_04_db:
+  lab04_mongodbdata:
+
+
+networks:
+  lab_04-network:
+    driver: bridge
+    external: false
