@@ -1,0 +1,262 @@
+[
+  {
+    "message_id": 1,
+    "sender_id": 101,
+    "recipient_id": 102,
+    "text": "Привет, как дела?",
+    "timestamp": "2024-04-20T10:15:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "image",
+        "url": "https://example.com/image1.jpg"
+      }
+  },
+  {
+    "message_id": 2,
+    "sender_id": 102,
+    "recipient_id": 101,
+    "text": "Привет! У меня все отлично, спасибо! А у тебя?",
+    "timestamp": "2024-04-20T10:30:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 3,
+    "sender_id": 103,
+    "recipient_id": 101,
+    "text": "Здравствуй! Может встретимся на выходных?",
+    "timestamp": "2024-04-20T11:45:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 4,
+    "sender_id": 104,
+    "recipient_id": 101,
+    "text": "Привет! Как прошла вчерашняя пробежка?",
+    "timestamp": "2024-04-20T12:00:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 5,
+    "sender_id": 101,
+    "recipient_id": 105,
+    "text": "Привет! Давно не виделись. Хочешь встретиться на кофе?",
+    "timestamp": "2024-04-20T13:20:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 6,
+    "sender_id": 106,
+    "recipient_id": 101,
+    "text": "Привет! Как твои дела?",
+    "timestamp": "2024-04-20T14:30:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 7,
+    "sender_id": 101,
+    "recipient_id": 107,
+    "text": "Привет! На выходных идем на пикник. Присоединяйся!",
+    "timestamp": "2024-04-20T15:45:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 8,
+    "sender_id": 108,
+    "recipient_id": 101,
+    "text": "Здравствуй! У меня есть пара билетов на концерт. Интересно?",
+    "timestamp": "2024-04-20T16:00:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 9,
+    "sender_id": 109,
+    "recipient_id": 101,
+    "text": "Привет! Как проходит твой день?",
+    "timestamp": "2024-04-20T17:15:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 10,
+    "sender_id": 101,
+    "recipient_id": 110,
+    "text": "Привет! Уже прочитал новую книгу? Как впечатления?",
+    "timestamp": "2024-04-20T18:30:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 11,
+    "sender_id": 111,
+    "recipient_id": 101,
+    "text": "Здравствуй! Какие у тебя планы на выходные?",
+    "timestamp": "2024-04-20T19:45:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 12,
+    "sender_id": 101,
+    "recipient_id": 112,
+    "text": "Привет! Хочешь пойти на велопрогулку?",
+    "timestamp": "2024-04-20T20:00:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 13,
+    "sender_id": 113,
+    "recipient_id": 101,
+    "text": "Привет! Как прошел твой день?",
+    "timestamp": "2024-04-20T21:15:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 14,
+    "sender_id": 101,
+    "recipient_id": 114,
+    "text": "Привет! Как твои впечатления от поездки в Тайланд?",
+    "timestamp": "2024-04-20T22:30:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 15,
+    "sender_id": 115,
+    "recipient_id": 101,
+    "text": "Здравствуй! Помнишь, мы обсуждали новый тренировочный режим? Хочешь попробовать его вместе?",
+    "timestamp": "2024-04-20T23:45:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 16,
+    "sender_id": 101,
+    "recipient_id": 116,
+    "text": "Привет! Как прошел ужин с семьей?",
+    "timestamp": "2024-04-21T00:00:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 17,
+    "sender_id": 117,
+    "recipient_id": 101,
+    "text": "Здравствуй! Можно я задам пару вопросов по проекту?",
+    "timestamp": "2024-04-21T01:15:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 18,
+    "sender_id": 101,
+    "recipient_id": 118,
+    "text": "Привет! Какой музей вы посетили?",
+    "timestamp": "2024-04-21T02:30:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 19,
+    "sender_id": 119,
+    "recipient_id": 101,
+    "text": "Здравствуй! Хочешь пойти на концерт вместе?",
+    "timestamp": "2024-04-21T03:45:00Z",
+    "is_read": false,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  },
+  {
+    "message_id": 20,
+    "sender_id": 101,
+    "recipient_id": 120,
+    "text": "Привет! Как прошло занятие йогой?",
+    "timestamp": "2024-04-21T04:00:00Z",
+    "is_read": true,
+    "attachment":
+      {
+        "type": "",
+        "url": ""
+      }
+  }
+]
