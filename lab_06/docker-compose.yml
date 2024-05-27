@@ -1,0 +1,177 @@
+version: '3.8'
+services:
+  lab_06_user:
+    tty: true
+    container_name: lab_06_user
+    command : bash start.sh
+    build:
+      context: .
+      dockerfile: my_service/Dockerfile
+    environment:
+      DB_HOST: lab_06_postgres
+      DB_PORT: 5432
+      DB_LOGIN: root
+      DB_PASSWORD: root
+      DB_DATABASE: archdb
+      MONGO_HOST: lab06_mongo
+      MONGO_PORT: 27017
+      MONGO_DATABASE: arch
+      JWT_KEY: 0123456789ABCDEF0123456789ABCDEF
+      CACHE: lab_06_cache:6379
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8081:8080
+    networks:
+      - lab_06-network
+  
+  lab_06_post:
+    tty: true
+    container_name: lab_06_post
+    command : bash start.sh
+    build:
+      context: .
+      dockerfile: my_service/Dockerfile
+    environment:
+      DB_HOST: lab_06_postgres
+      DB_PORT: 5432
+      DB_LOGIN: root
+      DB_PASSWORD: root
+      DB_DATABASE: archdb
+      MONGO_HOST: lab06_mongo
+      MONGO_PORT: 27017
+      MONGO_DATABASE: arch
+      JWT_KEY: 0123456789ABCDEF0123456789ABCDEF
+      CACHE: lab_06_cache:6379
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8082:8080
+    networks:
+      - lab_06-network  
+  
+  lab_05_message:
+    tty: true
+    container_name: lab_06_message
+    command : bash start.sh
+    build:
+      context: .
+      dockerfile: my_service/Dockerfile
+    environment:
+      DB_HOST: lab_06_postgres
+      DB_PORT: 5432
+      DB_LOGIN: root
+      DB_PASSWORD: root
+      DB_DATABASE: archdb
+      MONGO_HOST: lab06_mongo
+      MONGO_PORT: 27017
+      MONGO_DATABASE: arch
+      JWT_KEY: 0123456789ABCDEF0123456789ABCDEF
+      CACHE: lab_06_cache:6379
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8083:8080
+    networks:
+      - lab_06-network
+  
+  lab_06_gateway:
+    tty: true
+    container_name: lab_06_gateway
+    command : bash start_gateway.sh
+    build:
+      context: .
+      dockerfile: my_service/lab_06_gateway_dockerfile
+    environment:
+      DB_HOST: lab_06_postgres
+      DB_PORT: 5432
+      DB_LOGIN: root
+      DB_PASSWORD: root
+      DB_DATABASE: archdb
+      MONGO_HOST: lab06_mongo
+      MONGO_PORT: 27017
+      MONGO_DATABASE: arch
+      JWT_KEY: 0123456789ABCDEF0123456789ABCDEF
+      CACHE: lab_06_cache:6379
+      USER_ADDRESS: http://lab_06_user:8080
+      POST_ADDRESS: http://lab_06_post:8080
+      MESSAGE_ADDRES: http://lab_06_message:8080
+    ports:
+      - 8888:8888
+    networks:
+      - lab_06-network
+
+  db_init:
+    tty: true
+    container_name: lab_06_db_init
+    command : bash db_init.sh
+    build:
+      context: .
+      dockerfile: my_service/db_init_Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8084:8080
+    networks:
+      - lab_06-network
+
+  db:
+    container_name: lab_06_postgres
+    image: postgres:15
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+      POSTGRES_DB: archdb
+    volumes:
+      - lab_06_db:/data/postgres
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - lab_06-network
+
+  mongodb:
+    image: mongo:5.0
+    container_name: lab06_mongo
+    restart: on-failure
+    networks:
+      - lab_06-network
+    volumes:
+      - lab06_mongodbdata:/data/db
+    ports:
+      - '27017:27017'
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+    
+  lab_06_cache:
+    container_name: lab_06_cache
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning 
+    networks:
+      - lab_06-network
+    volumes: 
+      - lab06_cache:/data
+  
+volumes:
+  lab_06_db:
+  lab06_mongodbdata:
+  lab06_cache:
+
+
+networks:
+  lab_06-network:
+    driver: bridge
+    external: false
